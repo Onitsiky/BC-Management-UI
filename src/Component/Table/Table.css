@@ -1,0 +1,11 @@
+.my-table{
+    width: 100%;
+    margin: auto;
+    border-radius: 2%;
+}
+option{
+    cursor: pointer;
+}
+tr:hover{
+    border-left: 2px solid orange;
+}
