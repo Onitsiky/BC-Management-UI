@@ -8,6 +8,7 @@ import ModalExpenditure from "../Modal/ModalExpenditure";
 import UpdateExpenditure from "../Modal/UpdateExpenditure";
 import { useEffect } from "react";
 import instance from "../Config/axios";
+import Pagination from "../Navigation/Pagination";
 
 const Expenditure = () => {
     const [show, setShow] = useState(false);
@@ -18,6 +19,7 @@ const Expenditure = () => {
     const [upDesc, setUpDesc] = useState();
     const [upMontant, setUpMontant] = useState();
     const [upCatId, setUpCatId] = useState();
+    const [page, setPage] = useState(0);
     function handleUpdate(){
         setShowUpdate(false);
     }
@@ -25,7 +27,7 @@ const Expenditure = () => {
         setShow(false);
     }
     useEffect(() => {
-        const temp = instance.get("expenditures?page=0&page_size=5");
+        const temp = instance.get("expenditures?page="+page+"&page_size=5");
         temp.then((res) => {
             setData(res.data);
             console.log(res.data);
@@ -33,7 +35,7 @@ const Expenditure = () => {
         .catch((err) => {
             console.log(err);
         })
-    }, [])
+    }, )
     return(
         <div>
             <div className="modal-wrapper"
@@ -92,6 +94,7 @@ const Expenditure = () => {
 
                 </tbody>
             </table>
+            <Pagination page={page} setPage={setPage} data={data} />
             <button className="btn btn-success mt-2" onClick={() => setShow(true)}>Ajouter</button>
         </div>
         </div>

@@ -35,28 +35,6 @@ const Table = () => {
                         <td>20,000 Ar</td>
                         <td>9,000 Ar</td>
                     </tr>
-                    {/*
-                        data.map((elt, key) => (
-                            <tr key={key}>
-                                <td className="p-2">
-                                    {elt?.roomNumber}
-                                    </td>
-
-                                <td className="p-2">{elt?.description}</td>
-
-                                <td className="p-2">
-                                    {elt?.available ? "Libre" : "Réservé"}
-                                    </td>
-                                <td className="p-2">{elt?.type?.name}</td>
-                                <td className="p-2">{elt?.type?.price}</td>
-                                <td>
-                                    <button className="btn btn-primary" 
-                                   onClick={() => handleUpdate(key+1, elt?.roomNumber, elt?.type?.price, elt?.description, elt?.type?.id)}>Modifier</button>
-                                </td>
-                            </tr>
-                        ))
-                    */}
-                    
                 </tbody>
             </table>
         </div>

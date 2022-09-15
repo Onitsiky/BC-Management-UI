@@ -9,6 +9,7 @@ import ModalBill from "../Modal/ModalBill";
 import UpdateBill from "../Modal/UpdateBill";
 import { useEffect } from "react";
 import instance from "../Config/axios";
+import Pagination from "../Navigation/Pagination";
 
 const Factures = () => {
     const [show, setShow] = useState(false);
@@ -17,6 +18,8 @@ const Factures = () => {
     const [name, setName] = useState();
     const [contact, setContact] = useState();
     const [id, setId] = useState();
+    const [page, setPage] = useState(0);
+
     function handleUpdate(){
 
         setShowUpdate(false);
@@ -26,19 +29,18 @@ const Factures = () => {
     }
     function update (e){
         setName(e.target.value);
-        setContact(e.targer.value);
+        setContact(e.target.value);
         setShowUpdate(true)
     }
     useEffect(() => {
-        const temp = instance.get("bills?page=0&page_size=5");
+        const temp = instance.get("bills?page="+page+"&page_size=5");
         temp.then((res) => {
             setData(res.data);
-            console.log(res.data);
         })
         .catch((err) => {
             console.log(err);
         })
-    },[])
+    },)
     return(
         <div>
             <div className="modal-wrapper"
@@ -86,6 +88,7 @@ const Factures = () => {
                     }
                 </tbody>
             </table>
+            <Pagination page={page} setPage={setPage} data={data}/>
             <button className="btn btn-success mt-2" onClick={() => setShow(true)}>Ajouter</button>
         </div>
     </div>

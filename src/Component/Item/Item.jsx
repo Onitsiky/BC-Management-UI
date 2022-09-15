@@ -10,7 +10,7 @@ import UpdateItem from "../Modal/UpdateItem";
 import UpdateCategory from "../Modal/UpdateCategory";
 import { useEffect } from "react";
 import instance from "../Config/axios";
-import { useIsRTL } from "react-bootstrap/esm/ThemeProvider";
+import Pagination from "../Navigation/Pagination";
 
 const Item = () => {
     const [showItem, setShowItem] = useState(false);
@@ -24,6 +24,8 @@ const Item = () => {
     const [itemId, setItemId] = useState();
     const [catId, setCatId] = useState();
     const [catName, setCatName] = useState();
+    const [page, setPage] = useState(0);
+    const [catPage, setCatPage] = useState(0);
     function handleModalItem(){
         setShowItem(false);
     }
@@ -36,21 +38,21 @@ const Item = () => {
         setUpdateItem(false);
     }
     useEffect(() => {
-        const temp = instance.get("items?page=0&page_size=4");
+        const temp = instance.get("items?page="+page+"&page_size=5");
         temp.then((res) => {
             setData(res.data);
         })
         .catch((err) => {
             console.log(err);
         })
-        const temporary = instance.get("categories?page=0&page_size=4");
+        const temporary = instance.get("categories?page="+catPage+"&page_size=4");
         temporary.then((res) => {
             setCategory(res.data);
         })
         .catch((err) => {
             console.log(err);
         })
-    })
+    },)
     return(
         <div>
             <div className="modal-wrapper"
@@ -78,35 +80,8 @@ const Item = () => {
             <div className="table mt-5 text-center mb-4">
                 <h2>Liste des articles et catégories de dépense</h2>
             </div>
-            <SearchBar label="Rechercher article..."/>
             <div className="row">
-                <div className="col-6">
-                <table className="table table-stripped rounded-2 shadow text-center my-table" id="pdfdiv">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Catégorie</th>
-                        <th scope="col">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        (category || []).map((elt, key) => (
-                            <tr>
-                                <td>{elt?.id}</td>
-                                <td>{elt?.categoryName}</td>
-                                <td><FiEdit size={25} className="icon" onClick={() => {
-                                    setUpdateCategory(true);
-                                    setCatId(elt?.id);
-                                    setCatName(elt?.categoryName);
-                                    }}/> <MdDelete size={25} className="mx-3 icon"/></td>
-                            </tr>
-                        ))
-                    }
-                </tbody>
-            </table>
-            <button className="btn btn-success mt-2" onClick={() => setShowCategory(true)}>Ajouter</button>
-                </div>
+            <SearchBar label="Rechercher article..."/>
                 <div className="col-6">
                 <table className="table table-stripped rounded-2 shadow text-center my-table" id="pdfdiv">
                 <thead>
@@ -135,6 +110,35 @@ const Item = () => {
                     }
                 </tbody>
             </table>
+            <Pagination page={page} setPage={setPage} data={data}/>
+            <button className="btn btn-success mt-2" onClick={() => setShowCategory(true)}>Ajouter</button>
+                </div>
+                <div className="col-6">
+                <table className="table table-stripped rounded-2 shadow text-center my-table" id="pdfdiv">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Catégorie</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                        (category || []).map((elt, key) => (
+                            <tr>
+                                <td>{elt?.id}</td>
+                                <td>{elt?.categoryName}</td>
+                                <td><FiEdit size={25} className="icon" onClick={() => {
+                                    setUpdateCategory(true);
+                                    setCatId(elt?.id);
+                                    setCatName(elt?.categoryName);
+                                    }}/> <MdDelete size={25} className="mx-3 icon"/></td>
+                            </tr>
+                        ))
+                    }
+                </tbody>
+            </table>
+            <Pagination page={catPage} setPage={setCatPage} data={category}/>
             <button className="btn btn-success mt-2" onClick={() => setShowItem(true)}>Ajouter</button>
                 </div>
             </div>

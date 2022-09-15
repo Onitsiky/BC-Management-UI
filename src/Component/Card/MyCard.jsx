@@ -6,7 +6,7 @@ const MyCard = ({title, value, date}) => {
         <div class="card col-lg-2 m-2">
             <div class="card-body">
                 <p class="card-text">{date} : {today}</p>
-                <p class="card-text">{title} : {value}</p>
+                <p class="card-text">{title} : {value} Mga</p>
             </div>
         </div>            
     )

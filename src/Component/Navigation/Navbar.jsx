@@ -1,7 +1,12 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import "./Navbar.css";
 
 const Navbar = () => {
+    const navigate = useNavigate();
+    function disconnect (){
+        navigate("/login");
+    }
     return(
         <div className="navbar-container bg-dark">
             <div className="navbar-item row">
@@ -11,7 +16,7 @@ const Navbar = () => {
             <a href="#" className="col-1 m-3"><Link to="/expenditures">Dépenses</Link></a>
             <a href="#" className="col-1 m-3"><Link to="/items">Articles</Link></a>
             </div>
-            <button className="col-lg-2 btn btn-light navbar-btn rounded-2 m-2">Se déconnecter</button>
+            <button className="col-lg-2 btn btn-light navbar-btn rounded-2 m-2" onClick={() => disconnect()}>Se déconnecter</button>
             </div>
         </div>
     )
